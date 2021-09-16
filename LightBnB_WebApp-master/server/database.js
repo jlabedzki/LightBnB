@@ -150,10 +150,6 @@ const getAllProperties = function (options, limit = 10) {
     `;
   }
 
-
-
-  console.log(queryString, queryParams)
-
   return pool
     .query(queryString, queryParams)
     .then(res => {
