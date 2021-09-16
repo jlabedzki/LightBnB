@@ -1,13 +1,4 @@
-const properties = require('./json/properties.json');
-const users = require('./json/users.json');
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  user: 'johnny',
-  password: '123',
-  host: 'localhost',
-  database: 'lightbnb'
-});
+const db = require('./db');
 
 /// Users
 
@@ -17,11 +8,11 @@ const pool = new Pool({
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function (email) {
-  return pool
+  return db
     .query(`SELECT * FROM users WHERE email LIKE $1;`, [`%${email}%`])
     .then(res => res.rows.length > 0 ? res.rows[0] : null)
     .catch(err => err.message);
-}
+};
 exports.getUserWithEmail = getUserWithEmail;
 
 /**
@@ -30,7 +21,7 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function (id) {
-  return pool
+  return db
     .query(`SELECT * FROM users WHERE id = $1;`, [id])
     .then(res => res.rows.length > 0 ? res.rows[0] : null)
     .catch(err => err.message);
@@ -46,7 +37,7 @@ exports.getUserWithId = getUserWithId;
 const addUser = function (user) {
   const values = [`${user.name}`, `${user.email}`, `password`]
 
-  return pool
+  return db
     .query(`
       INSERT INTO users (name, email, password)
       VALUES ($1, $2, $3)
@@ -65,7 +56,7 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function (guest_id, limit = 10) {
-  return pool
+  return db
     .query(`
     SELECT properties.*, reservations.*, AVG(rating) AS average_rating
     FROM reservations
@@ -150,7 +141,7 @@ const getAllProperties = function (options, limit = 10) {
     `;
   }
 
-  return pool
+  return db
     .query(queryString, queryParams)
     .then(res => {
       console.log(res.rows);
@@ -169,7 +160,7 @@ exports.getAllProperties = getAllProperties;
 const addProperty = function (property) {
   const values = [property.owner_id, `${property.title}`, `${property.description}`, `${property.thumbnail_photo_url}`, `${property.cover_photo_url}`, `${property.cost_per_night}`, `${property.street}`, `${property.city}`, `${property.province}`, `${property.post_code}`, `${property.country}`, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms];
 
-  return pool
+  return db
     .query(`
       INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, street, city, province, post_code, country, parking_spaces, number_of_bathrooms, number_of_bedrooms)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
