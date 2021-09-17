@@ -173,3 +173,19 @@ const addProperty = function (property) {
     .catch(err => err.message);
 }
 exports.addProperty = addProperty;
+
+const addReservation = function (reservation) {
+  const values = [`${reservation.start_date}`, `${reservation.end_date}`, reservation.guest_id, reservation.property_id];
+
+  return db
+    .query(`
+      INSERT INTO reservations (start_date, end_date, guest_id, property_id)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;
+    `, values)
+    .then(res => {
+      return res.rows;
+    })
+    .catch(err => err.message);
+}
+exports.addReservation = addReservation;

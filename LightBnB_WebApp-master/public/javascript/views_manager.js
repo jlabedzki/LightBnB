@@ -4,7 +4,7 @@ $(() => {
 
   window.views_manager = {};
 
-  window.views_manager.show = function(item) {
+  window.views_manager.show = function (item) {
     $newPropertyForm.detach();
     $propertyListings.detach();
     $searchPropertyForm.detach();
@@ -34,10 +34,10 @@ $(() => {
           $error.remove();
           views_manager.show('listings');
         }, 2000);
-        
+
         break;
       }
     }
   }
-  
+
 });

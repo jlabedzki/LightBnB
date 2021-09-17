@@ -8,7 +8,7 @@
   margin: 20px 0;
   width: 100%;
   max-width: 600px;
-  height: 200px;
+  height: auto;
   border: 1px solid black;
   box-sizing: border-box;
   display: flex;
@@ -30,13 +30,13 @@
   .property-listing {
     flex-direction: column;
     height: 400px; } }
-.search-property-form, .login-form, .new-property-form, .sign-up-form {
+.search-property-form, .login-form, .new-property-form, .sign-up-form, .new-reservation-form {
   max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   margin: auto; }
-  .search-property-form__field-wrapper, .login-form__field-wrapper, .new-property-form__field-wrapper, .sign-up-form__field-wrapper {
+  .search-property-form__field-wrapper, .login-form__field-wrapper, .new-property-form__field-wrapper, .sign-up-form__field-wrapper, .new-reservation-form__field-wrapper {
     width: 100%;
     display: flex; }
   .search-property-form label, .login-form label, .new-property-form label, .sign-up-form label {
@@ -55,5 +55,9 @@
 
 .hidden {
   display: none; }
+
+.notHidden {
+  display: block;
+}
 
 /*# sourceMappingURL=main.css.map */
